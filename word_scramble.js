@@ -107,16 +107,20 @@ function getRandomIndex(string) {
 function getDificulty() {
   console.log("\n1. Easy \n2. Medium \n3. Hard");
 
-  const dificulty = +prompt("\tChoose your dificulty level : ");
-
-  switch (dificulty) {
+  switch (+prompt("\tChoose your dificulty level : ")) {
     case 1:
+      console.clear();
+      console.log("\n\t------- Easy Level --------\n");
       return getEasyWord();
 
     case 2:
+      console.clear();
+      console.log("\n\t------- Medium Level --------\n");
       return getMediumWord();
 
     case 3:
+      console.clear();
+      console.log("\n\t------- Hard Level --------\n");
       return getHardWord();
 
     default:
@@ -139,12 +143,16 @@ function getRandomWord() {
 }
 
 function askPlayAgain() {
-  if (confirm("\n ✳️  Do you want to play agian ?")) {
+  if (confirm("\n\n ✳️  Do you want to play agian ?")) {
     console.clear();
 
     return startGame();
   }
   console.log("\n\t🤝Thank you!! Good Byee!!!✌🏻✌🏻\n");
+}
+
+function quotes(contentToQuote) {
+  return '"' + contentToQuote + '"';
 }
 
 function doesUserFoundIt(maxAttempts, originalString, randomString) {
@@ -153,18 +161,20 @@ function doesUserFoundIt(maxAttempts, originalString, randomString) {
 
   if (originalString === userInput) {
     console.log(
-      "\n🥳🎉Bravo!! You've nailed it. The word was " + originalString + "!");
+      "\n\t🥳🎉Bravo!! You've nailed it. The word was " + quotes(originalString) + "!");
 
     return askPlayAgain();
   }
 
   if (maxAttempts <= 1) {
-    console.log("\n❗️Ohh sad!!☹️ You loose!!! Play again!🔂");
+    console.log(
+      "\n\t❗️Ohh sad!!☹️ You loose!!! The word was " + quotes(originalString) + " Play again!🔂");
 
     return askPlayAgain();
   }
+  
+  console.log("\n\tUmm...☹️ wrong guess!! Try again!");
 
-  console.log("\nUmm...☹️ wrong guess!! Try again!");
   doesUserFoundIt(maxAttempts - 1, originalString, randomString);
 }
 
