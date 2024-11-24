@@ -7,7 +7,7 @@ function getComputerInput() {
 
 function printLine(length) {
   let line = "";
-  
+
   for (let i = 0; i < length; i++) {
     line += "━";
   }
@@ -23,32 +23,44 @@ function whoWins(userTurn, computerTurn) {
   return condition1 || condition2 || condition3;
 }
 
+function askPlayAgain() {
+  if (confirm("\n ✳️  Do you want to play agian ?")) {
+    console.clear();
+
+    return getUserInput();
+  }
+
+  console.log("\n\t🤝Thank you!! Good Byee!!!✌🏻✌🏻\n");
+  return;
+}
+
+
 function getScore(nameOfPlayer, userTurn, computerTurn) {
   if (userTurn === computerTurn) {
-    return "Ohh! It's a tie!! Try again.";
+    return "\n\tOhh! It's a tie!! Try again.";
   }
 
   if (whoWins(userTurn, computerTurn)) {
-    return nameOfPlayer + " win!!!!";
+    return "\n\t🥳Yooo!!! You won!!!!";
   }
 
-  return "Computer Wins!!!";
+  return "\n\tComputer Won!!!";
 }
 
 function discription() {
   let discriptionMsg = "Here you will play with a computer.";
   discriptionMsg += "\nYou can leave whenever you want ";
-  discription += "Your Choices : "
+  discriptionMsg += "Your Choices : "
   const signs = "\n0 --> ✊🏻 (rock) \n1 --> 📃 (paper) \n2 --> ✂️  (scissors)";
 
   return discriptionMsg + signs;
 }
 
 function getInput() {
-  const userTurn = +prompt("\nIt's your turn! what is your choice ? ")
+  const userTurn = +prompt("\nIt's your turn! what is your choice ? ");
 
   if (userTurn < 0 || userTurn > 2) {
-    console.log("\nInvalid Choice❗️ Please Enter a valid Choice!!")
+    console.log("\nInvalid Choice❗️ Please Enter a valid Choice!!");
     return getInput();
   }
 
@@ -61,10 +73,11 @@ function getUserInput(nameOfPlayer) {
   const userTurn = getInput();
   const computerTurn = getComputerInput();
 
-  console.log("\n" + nameOfPlayer + "'s Choice : ", userTurn);
+  console.log("\nYour Choice : ", userTurn);
   console.log("Computer's Choice : ", computerTurn);
 
   console.log(getScore(nameOfPlayer, userTurn, computerTurn));
+  return askPlayAgain();
 }
 
 function getName() {
@@ -79,8 +92,8 @@ function startGame() {
 
   prompt(nameOfPlayer + " press 'Enter' to play!!!");
   console.clear();
-  return getUserInput(nameOfPlayer);
 
+  return getUserInput(nameOfPlayer);
 }
 
 startGame();
