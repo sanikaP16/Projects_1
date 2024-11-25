@@ -137,9 +137,10 @@ function getRandomWord() {
   for (let index = 0; index < randomNumbers.length; index++) {
     stringtoPrint += string[randomNumbers[index]];
   }
-  console.log("\nYour Word is : " + stringtoPrint);
 
-  doesUserFoundIt(5, string, stringtoPrint);
+  console.log("\n\tYour Word is : " + quotes(stringtoPrint));
+
+  isGuessCorrect(3, string, stringtoPrint);
 }
 
 function askPlayAgain() {
@@ -155,7 +156,12 @@ function quotes(contentToQuote) {
   return '"' + contentToQuote + '"';
 }
 
-function doesUserFoundIt(maxAttempts, originalString, randomString) {
+function getHint(originalString) {
+  console.log("\n\tUmm...☹️ wrong guess!! Try again!");
+  console.log("\tHINT : The word starts form : " + originalString[0]);
+}
+
+function isGuessCorrect(maxAttempts, originalString, randomString) {
   const userInput = prompt(
     "\nTake a guess!! you have " + maxAttempts + " remaining attempts!! ");
 
@@ -172,15 +178,15 @@ function doesUserFoundIt(maxAttempts, originalString, randomString) {
 
     return askPlayAgain();
   }
-  
-  console.log("\n\tUmm...☹️ wrong guess!! Try again!");
 
-  doesUserFoundIt(maxAttempts - 1, originalString, randomString);
+  getHint(originalString);
+
+  isGuessCorrect(maxAttempts - 1, originalString, randomString);
 }
 
 function description() {
   let messsage = "🔸🔸🔸🔸🔸WElCOME to WORD SCRAMBLE🔸🔸🔸🔸";
-  messsage += "\n\nRules : \n  You'll have 5 chance to guess the word!";
+  messsage += "\n\nRules : \n  You'll have 3 chance to guess the word!";
   messsage += "\n  It has 3 dificulty levels";
 
   return messsage;
