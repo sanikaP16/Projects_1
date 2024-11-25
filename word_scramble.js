@@ -87,16 +87,16 @@ function getRandomIndex(string) {
   let randomIndexes = '';
 
   while (randomIndexes.length < string.length) {
-    let flag = true;
+    let isNumberUnique = true;
     const number = Math.floor(Math.random() * string.length);
 
     for (let index = 0; index < randomIndexes.length; index++) {
       if (number === +randomIndexes[index]) {
-        flag = false;
+        isNumberUnique = false;
       }
     }
 
-    if (flag) {
+    if (isNumberUnique) {
       randomIndexes += number;
     }
   }
@@ -129,20 +129,6 @@ function getDificulty() {
   }
 }
 
-function getRandomWord() {
-  let string = getDificulty();
-  let randomNumbers = getRandomIndex(string);
-  let stringtoPrint = '';
-
-  for (let index = 0; index < randomNumbers.length; index++) {
-    stringtoPrint += string[randomNumbers[index]];
-  }
-
-  console.log("\n\tYour Word is : " + quotes(stringtoPrint));
-
-  isGuessCorrect(3, string, stringtoPrint);
-}
-
 function askPlayAgain() {
   if (confirm("\n\n ✳️  Do you want to play agian ?")) {
     console.clear();
@@ -166,15 +152,19 @@ function isGuessCorrect(maxAttempts, originalString, randomString) {
     "\nTake a guess!! you have " + maxAttempts + " remaining attempts!! ");
 
   if (originalString === userInput) {
-    console.log(
-      "\n\t🥳🎉Bravo!! You've nailed it. The word was " + quotes(originalString) + "!");
+    const winMessage1 = "\n\t🥳🎉Bravo!! You've nailed it. The word was ";
+    const winMessage2 = quotes(originalString) + "!";
+
+    console.log(winMessage1 + winMessage2);
 
     return askPlayAgain();
   }
 
   if (maxAttempts <= 1) {
-    console.log(
-      "\n\t❗️Ohh sad!!☹️ You loose!!! The word was " + quotes(originalString) + " Play again!🔂");
+    const loseMessage1 = '\n\t❗️Ohh sad!!☹️ You loose!!! The word was ';
+    const loseMessage2 = quotes(originalString) + 'Play again!🔂';
+
+    console.log(loseMessage1 + loseMessage2);
 
     return askPlayAgain();
   }
@@ -182,6 +172,20 @@ function isGuessCorrect(maxAttempts, originalString, randomString) {
   getHint(originalString);
 
   isGuessCorrect(maxAttempts - 1, originalString, randomString);
+}
+
+function getRandomWord() {
+  let string = getDificulty();
+  let randomNumbers = getRandomIndex(string);
+  let stringtoPrint = '';
+
+  for (let index = 0; index < randomNumbers.length; index++) {
+    stringtoPrint += string[randomNumbers[index]];
+  }
+
+  console.log("\n\tYour Word is : " + quotes(stringtoPrint));
+
+  isGuessCorrect(3, string, stringtoPrint);
 }
 
 function description() {
