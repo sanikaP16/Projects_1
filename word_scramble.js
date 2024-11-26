@@ -3,106 +3,53 @@ function getNumber() {
 }
 
 function getEasyWord() {
-  switch (getNumber()) {
-    case 0:
-      return 'piano';
-    case 1:
-      return 'journey';
-    case 2:
-      return 'scramble';
-    case 3:
-      return 'attractive';
-    case 4:
-      return 'evident';
-    case 5:
-      return 'history';
-    case 6:
-      return 'entertain';
-    case 7:
-      return 'awesome';
-    case 8:
-      return 'accomplish';
-    case 9:
-      return 'peculiar';
-    default:
-      console.log('something went wrong!!');
-  }
+  const arrayOfEasyWords = ['Piano', 'Journey', 'Scramble', 'Attractive',
+    'Evident', 'History', 'Entertain', 'Awesome', 'Accomplish', 'Peculiar'
+  ];
+
+  return arrayOfEasyWords[getNumber()];
 }
 
 function getMediumWord() {
-  switch (getNumber()) {
-    case 0:
-      return 'thunder';
-    case 1:
-      return 'difference';
-    case 2:
-      return 'historical';
-    case 3:
-      return 'motivation';
-    case 4:
-      return 'acceptance';
-    case 5:
-      return 'permission';
-    case 6:
-      return 'suggestion';
-    case 7:
-      return 'alteration';
-    case 8:
-      return 'accomplish';
-    case 9:
-      return 'information';
-    default:
-      console.log('something went wrong!!');
-  }
+  const arrayOfMediumWord = ['Thunder', 'Difference', 'Historical',
+    'Motivation', 'Acceptance', 'Permission', 'Suggestion', 'Alteration',
+    'Accomplish', 'Information'
+  ];
+
+  return arrayOfMediumWord[getNumber()];
 }
 
 function getHardWord() {
-  switch (getNumber()) {
-    case 0:
-      return 'consistency';
-    case 1:
-      return 'observation';
-    case 2:
-      return 'anniversary';
-    case 3:
-      return 'recognition';
-    case 4:
-      return 'revolution';
-    case 5:
-      return 'consequence';
-    case 6:
-      return 'appreciation';
-    case 7:
-      return 'perception';
-    case 8:
-      return 'investment';
-    case 9:
-      return 'culmination';
-    default:
-      console.log('something went wrong!!');
+  const arrayOfHardWord = ['consistency', 'obervation', 'anniversary',
+    'recognition', 'consequence', 'perception', 'investment', 'culmination'
+  ];
+
+  return arrayOfHardWord[getNumber()];
+}
+
+function isNumberUnique(number, randomIndexes) {
+  for (let index = 0; index < randomIndexes.length; index++) {
+    if (number === +randomIndexes[index]) {
+      return false;
+    }
   }
+
+  return true;
 }
 
 function getRandomIndex(string) {
   let randomIndexes = '';
-
   while (randomIndexes.length < string.length) {
-    let isNumberUnique = true;
     const number = Math.floor(Math.random() * string.length);
 
-    for (let index = 0; index < randomIndexes.length; index++) {
-      if (number === +randomIndexes[index]) {
-        isNumberUnique = false;
-      }
-    }
-
-    if (isNumberUnique) {
+    if (isNumberUnique(number, randomIndexes)) {
       randomIndexes += number;
     }
   }
 
   return randomIndexes;
 }
+
 
 function getDificulty() {
   console.log("\n1. Easy \n2. Medium \n3. Hard");
@@ -135,7 +82,9 @@ function askPlayAgain() {
 
     return startGame();
   }
+
   console.log("\n\t🤝Thank you!! Good Byee!!!✌🏻✌🏻\n");
+  return;
 }
 
 function quotes(contentToQuote) {
@@ -147,20 +96,33 @@ function getHint(originalString) {
   console.log("\tHINT : The word starts form : " + originalString[0]);
 }
 
-function isGuessCorrect(maxAttempts, originalString, randomString) {
-  const userInput = prompt(
-    "\nTake a guess!! you have " + maxAttempts + " remaining attempts!! ");
-
+function checkGuess(maxAttempts, originalString, userInput) {
   if (originalString === userInput) {
     const winMessage1 = "\n\t🥳🎉Bravo!! You've nailed it. The word was ";
     const winMessage2 = quotes(originalString) + "!";
 
     console.log(winMessage1 + winMessage2);
 
-    return askPlayAgain();
+    askPlayAgain();
+    return true;
   }
 
-  if (maxAttempts <= 1) {
+  if (maxAttempts > 0) {
+    getHint(originalString);
+  }
+
+  return false;
+}
+
+function isGuessCorrect(maxAttempts, originalString) {
+  const userInput = prompt(
+    "\nTake a guess!! you have " + maxAttempts + " remaining attempts!! ");
+
+  if (checkGuess(maxAttempts, originalString, userInput)) {
+    return;
+  }
+
+  if (maxAttempts === 1) {
     const loseMessage1 = '\n\t❗️Ohh sad!!☹️ You loose!!! The word was ';
     const loseMessage2 = quotes(originalString) + 'Play again!🔂';
 
@@ -169,13 +131,11 @@ function isGuessCorrect(maxAttempts, originalString, randomString) {
     return askPlayAgain();
   }
 
-  getHint(originalString);
-
-  isGuessCorrect(maxAttempts - 1, originalString, randomString);
+  return isGuessCorrect(maxAttempts - 1, originalString);
 }
 
 function getRandomWord() {
-  let string = getDificulty();
+  const string = getDificulty();
   let randomNumbers = getRandomIndex(string);
   let stringtoPrint = '';
 
