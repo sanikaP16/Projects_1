@@ -1,6 +1,6 @@
 function repeat(repeatString, times) {
   let string = "";
-  
+
   for (let i = 0; i <= times; i++) {
     string += repeatString;
   }
@@ -8,10 +8,11 @@ function repeat(repeatString, times) {
   return string;
 }
 
-let car1 = "  ______" + repeat(" ", 85);
-let car2 = " /|_||_\\`.__" + repeat(" ", 81);
-let car3 = "(   _    _ _\\" + repeat(" ", 80);
-let car4 = "=`-(_)--(_)-'" + repeat("_", 80);
+let car = ["  ______" + repeat(" ", 85),
+" /|_||_\\`.__" + repeat(" ", 81),
+"(   _    _ _\\" + repeat(" ", 80),
+"=`-(_)--(_)-'" + repeat("_", 80)];
+
 function delay(time) {
   for (let i = 0; i < time * 10000000; i++) { }
 }
@@ -42,8 +43,8 @@ function drawMountain() {
     "           /     \\/    /  /        |::|::|:|:-:| / ^  \\  ^      ^     \\",
     "          / _Q  _Q_Q  / _Q    _Q   |::|::|:|:::|/    ^ \\   _Q      ^",
     "         /_\\)   /_\\)/_/\\)  /_\\)  /_\\)  |::|::|:|:::|          /_\\)",
-    "         _O|/O___O|/O_OO|/O__O|/O__O|/O__________________________O|/O__________",
-    "//////////////////////////////////////////////////////////////////////////////////////////////"];
+    "       _O|/O___O|/O_OO|/O__O|/O__O|/O__________________________O|/O__________",
+    "////" + repeat("/", 90)];
 
   for (let i = 0; i < back1.length; i++) {
     console.log(back1[i]);
@@ -54,17 +55,16 @@ function moveCar() {
   for (let i = 0; i < 200; i++) {
     const road = repeat("▂", 93);
     const line = repeat("\n", 2);
-    car1 = getNewframe(car1);
-    car2 = getNewframe(car2);
-    car3 = getNewframe(car3);
-    car4 = getNewframe(car4);
 
     console.clear();
     drawMountain();
 
-    console.log(car1 + "\n" + car2 + "\n" + car3 + "\n" + car4);
+    for (let index = 0; index < car.length; index++) {
+      car[index] = getNewframe(car[index]);
+      console.log(car[index]);
+    }
+
     console.log(line + road + line);
-    
     delay(10);
   }
 }
