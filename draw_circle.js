@@ -15,11 +15,7 @@ function drawCircle() {
       const radiusSquare =
         ((xCoordinate - center) ** 2) + ((yCoordinate - center) ** 2);
 
-      if (radiusSquare < 2025) {
-        line += "⚪️";
-      } else {
-        line += "  ";
-      }
+      line += radiusSquare < 2025 ? "⚪️" : "  ";
     }
 
     delay(30);
